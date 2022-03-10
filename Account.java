@@ -3,6 +3,7 @@ import Project_AccountInfo.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Account implements FileOperations_inter{
@@ -110,7 +111,7 @@ public class Account implements FileOperations_inter{
                 System.out.println("Record Not Found!!!");
             }
 
-        } catch (FileNotFoundException e) { //| NoSuchElementException
+        } catch (FileNotFoundException| NoSuchElementException e) { 
             e.printStackTrace();
         }
 
@@ -154,7 +155,7 @@ public class Account implements FileOperations_inter{
                 System.out.println("Record Not Found!!!");
             }
 
-        } catch (FileNotFoundException e) { //| NoSuchElementException
+        } catch (FileNotFoundException | NoSuchElementException e) { 
             e.printStackTrace();
         }
         return accountNumber;
@@ -199,7 +200,7 @@ public class Account implements FileOperations_inter{
                 System.out.println("Record Not Found!!!");
             }
 
-        } catch (FileNotFoundException e) { //| NoSuchElementException
+        } catch (FileNotFoundException| NoSuchElementException e) { 
             e.printStackTrace();
         }
         return nameOfHolder;
