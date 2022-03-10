@@ -3,6 +3,7 @@ import java.util.Scanner;
 import Project_AccountInfo.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 public class Menu {
 
@@ -97,7 +98,7 @@ public class Menu {
                 System.out.println("Record Not Found!!!");
             }
 
-        } catch (FileNotFoundException e) { //| NoSuchElementException
+        } catch (FileNotFoundException | NoSuchElementException e) { 
             e.printStackTrace();
         }
         return nameOfHolder;
