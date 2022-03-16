@@ -3,6 +3,7 @@ import Project_AccountInfo.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.security.InvalidAlgorithmParameterException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -12,6 +13,7 @@ public class Account implements FileOperations_inter{
     private String AccountNumber;
     private String Name;
     private int choice;
+    private boolean validoption2 = false; /****EDITTED*********/
     private static Scanner x;
     private String Pin;
     private String Password;
@@ -47,19 +49,36 @@ public class Account implements FileOperations_inter{
 
     }
 
-    public void getAccountInfo(){
-        findFromCSV(this.getPin(), this.getPassword());
-        System.out.println("--------------------------------------------------------------");
-        System.out.println("Press \"0\" to back, Press\"9\" to logout");
-        Scanner input = new Scanner(System.in);
-        this.choice = input.nextInt();
+    public void getAccountInfo(){ /***********************EDITTED**************************** */
+
+        while(this.validoption2 == false){
+            findFromCSV(this.getPin(), this.getPassword());
+            System.out.println("--------------------------------------------------------------");
+            System.out.println("Press \"0\" to back, Press \"9\" to logout");
+            Scanner input = new Scanner(System.in);
+            try{
+                this.choice = input.nextInt();
+                if(this.choice != 0 && this.choice != 9){
+                    throw new InvalidAlgorithmParameterException("Error: <Option is not valid, please choose available option>");
+                }else{
+                    this.validoption2 = true;
+                }
+            }catch(InvalidAlgorithmParameterException e){
+                this.validoption2 = false;
+                System.out.println("*****************************************************************");
+                System.out.println(e.getMessage());
+                System.out.println("*****************************************************************");
+            }
+        }
+
         if(this.choice == 0){
+            this.validoption2 = false;
             this.back();
         }
         else if(this.choice == 9){
+            this.validoption2 = false;
             this.logout();
         }
-        
         
         
     }

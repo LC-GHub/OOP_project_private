@@ -3,12 +3,14 @@ import java.util.Scanner;
 import Project_AccountInfo.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.security.InvalidAlgorithmParameterException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 public class Menu {
 
     private int choice;
     private static Scanner x;
+    private boolean validoption = false;
     private static String filePath = "C:\\Users\\chewc\\OneDrive\\Desktop\\OOP\\javacode\\School\\src\\Project_AccountInfo\\Project_AccountInfo\\database.csv";
     /******this one need to change to ur own file path*******/
     Scanner input2 = new Scanner(System.in);
@@ -27,14 +29,38 @@ public class Menu {
         return this.Password;
     }
 
-    public void printMenu(){
-        System.out.println("Welcome " + findFromCSV_Name(this.getPin(), this.getPassword()) + ",");
-        System.out.println("What can we help you with today? ");
-        System.out.println("1. AccountInfo");
-        System.out.println("2. Transfer funds");
-        System.out.println("3. Settings");
-
-        this.choice = input2.nextInt();
+    /*******************************EDITED***************************/
+    public void printMenu(){ 
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("Welcome " + findFromCSV_Name(this.getPin(), this.getPassword()));
+        System.out.println("--------------------------------------------------------------------");
+        while(validoption == false){
+            System.out.println("*****************************************************************");
+            System.out.println("What can we help you with today? ");
+            System.out.println("1. AccountInfo");
+            System.out.println("2. Transfer funds");
+            System.out.println("3. Settings");
+            System.out.println("--------------------------------------------------------------");
+            System.out.println("Press \"9\" to logout");
+            try{
+                this.choice = input2.nextInt();
+                if(this.choice > 3 && this.choice != 9 || this.choice < 1 && this.choice != 9){
+                    throw new InvalidAlgorithmParameterException("Error: <Option is not valid, please choose available option>");
+                }
+                else if(this.choice == 9){
+                    this.Menulogout();
+                }
+                else{
+                    validoption = true;
+                }
+            }catch(InvalidAlgorithmParameterException e){
+                System.out.println("*****************************************************************");
+                System.out.println(e.getMessage());
+                validoption = false;
+            }
+              
+        }
+        validoption = false;
         selectionFunction(this.choice);
     }
 
@@ -58,6 +84,15 @@ public class Menu {
             System.out.println("Go into Settings object");
             break;
         }
+    }
+
+   /********************EDITTED*********************************/
+    public void Menulogout(){
+        Authetication.programStack.remove(1);//remove menu
+        Authetication Atm = (Authetication) Authetication.programStack.get(0);
+        Atm.logoutmessage();
+        Atm.Welcome();
+        Atm.loginRequest();
     }
     
     public static String findFromCSV_Name(String searchTerm1, String searchTerm2) {
